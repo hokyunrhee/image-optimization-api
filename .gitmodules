@@ -1,0 +1,3 @@
+[submodule "dynamic-image-transformation-for-amazon-cloudfront"]
+	path = dynamic-image-transformation-for-amazon-cloudfront
+	url = https://github.com/aws-solutions/dynamic-image-transformation-for-amazon-cloudfront

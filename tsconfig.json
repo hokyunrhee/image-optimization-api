@@ -2,10 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "commonjs",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
@@ -24,7 +21,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["lib/*"]
-    },
+    }
   },
   "exclude": ["node_modules", "cdk.out"],
   "ts-node": {

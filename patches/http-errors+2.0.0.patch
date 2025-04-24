@@ -1,0 +1,30 @@
+diff --git a/node_modules/http-errors/index.js b/node_modules/http-errors/index.js
+index c425f1e..dcee472 100644
+--- a/node_modules/http-errors/index.js
++++ b/node_modules/http-errors/index.js
+@@ -127,10 +127,10 @@ function createHttpErrorConstructor () {
+ function createClientErrorConstructor (HttpError, name, code) {
+   var className = toClassName(name)
+ 
+-  function ClientError (message) {
++  function ClientError (message, options) {
+     // create the error object
+     var msg = message != null ? message : statuses.message[code]
+-    var err = new Error(msg)
++    var err = new Error(msg, options)
+ 
+     // capture a stack trace to the construction point
+     Error.captureStackTrace(err, ClientError)
+@@ -196,10 +196,10 @@ function createIsHttpErrorFunction (HttpError) {
+ function createServerErrorConstructor (HttpError, name, code) {
+   var className = toClassName(name)
+ 
+-  function ServerError (message) {
++  function ServerError (message, options) {
+     // create the error object
+     var msg = message != null ? message : statuses.message[code]
+-    var err = new Error(msg)
++    var err = new Error(msg, options)
+ 
+     // capture a stack trace to the construction point
+     Error.captureStackTrace(err, ServerError)

@@ -1,11 +1,9 @@
+import { Construct } from "constructs";
 import { Duration, RemovalPolicy } from "aws-cdk-lib";
 import { Architecture, Runtime } from "aws-cdk-lib/aws-lambda";
-import {
-  NodejsFunction,
-  NodejsFunctionProps,
-} from "aws-cdk-lib/aws-lambda-nodejs";
+import { NodejsFunction, NodejsFunctionProps } from "aws-cdk-lib/aws-lambda-nodejs";
 import { LogGroup, LogGroupProps, RetentionDays } from "aws-cdk-lib/aws-logs";
-import { Construct } from "constructs";
+
 import merge from "lodash.merge";
 
 interface LambdaWithLogGroupProps extends NodejsFunctionProps {

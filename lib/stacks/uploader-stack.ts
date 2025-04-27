@@ -4,19 +4,31 @@ import { aws_certificatemanager as acm, RemovalPolicy, aws_route53 as route53, a
 
 import { S3UploadPresignedUrlApi } from "~/constructs/s3-upload-presigned-url-api";
 
+interface UploaderStackProps extends cdk.StackProps {
+  certificateArn: string;
+  hostedZoneId: string;
+  fullyQualifiedDomainName: string;
+}
+
 export class UploaderStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: UploaderStackProps) {
     super(scope, id, props);
 
-    const certificate = acm.Certificate.fromCertificateArn(this, "Certificate", process.env.CERTIFICATE_ARN);
-    const hostedZone = route53.HostedZone.fromHostedZoneId(this, "HostedZone", process.env.HOSTED_ZONE_ID);
+    const { certificateArn, hostedZoneId, fullyQualifiedDomainName } = props;
+
+    const certificate = acm.Certificate.fromCertificateArn(this, "Certificate", certificateArn);
+    const hostedZone = route53.HostedZone.fromHostedZoneAttributes(this, "HostedZone", {
+      zoneName: fullyQualifiedDomainName,
+      hostedZoneId,
+    });
+
     const bucket = new s3.Bucket(this, "Bucket", {
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
     });
 
     new S3UploadPresignedUrlApi(this, "S3UploadPresignedUrlApi", {
       bucket,
-      fullyQualifiedDomainName: process.env.FULLY_QUALIFIED_DOMAIN_NAME,
+      fullyQualifiedDomainName: fullyQualifiedDomainName,
       certificate,
       hostedZone,
     });

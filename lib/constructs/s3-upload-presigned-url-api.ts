@@ -43,6 +43,11 @@ export class S3UploadPresignedUrlApi extends Construct {
         certificate,
       },
     });
+    const apiKey = restApi.addApiKey("ApiKey", {
+      description: "API Key for the S3 Upload Presigned URL API",
+    });
+    const usagePlan = restApi.addUsagePlan("UsagePlan");
+    usagePlan.addApiKey(apiKey);
 
     restApi.root.addMethod("POST", new LambdaIntegration(getS3SignedUrlLambda));
 

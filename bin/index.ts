@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 import * as cdk from "aws-cdk-lib";
 
-import { UploaderStack } from "~/stacks/uploader-stack";
+import { config } from "~/config";
+import { Stage } from "~/stage";
+import { tags } from "~/tags";
 
 import "../env";
 
 const app = new cdk.App();
 
-new UploaderStack(app, "UploaderStack", {
-  env: {
-    region: process.env.AWS_REGION,
-  },
-});
+new Stage(app, "prod", { config, tags });

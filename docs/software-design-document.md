@@ -111,6 +111,21 @@ graph TD
 - `preSignedUrl`을 사용한 실제 S3 업로드의 `Content-Type`은 `key`에 제공된 파일 확장자를 기반으로 자동으로 결정됩니다.
 - 미리 서명된 URL에는 제한된 만료 시간(기본값 300초)이 있습니다.
 
+### 4.1.1. 클라이언트 측 업로드 예제
+
+다음은 클라이언트 측 JavaScript 코드 예시로, 발급받은 `preSignedUrl`을 사용하여 파일을 S3에 업로드하는 방법을 보여줍니다.
+
+```ts
+const response = await fetch("generated-presigned-url", {
+  method: "PUT",
+  headers: {
+    "Content-Type": file.type,
+    "X-API-Key": "API key",
+  },
+  body: file, // 'file' 변수는 <input type="file"> 요소 등에서 얻은 File 객체라고 가정
+});
+```
+
 ### 4.2. 이미지 변환 및 조회
 
 이 엔드포인트는 S3 버킷에 저장된 원본 이미지를 실시간으로 변환하고 조회하는 기능을 제공합니다.
